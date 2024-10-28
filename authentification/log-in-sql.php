@@ -22,6 +22,7 @@ if (!empty($_POST)) {
     } else {
 
     $_SESSION["connect"] = true;
+    $_SESSION["userName"] = $_POST["userName"];
 
     header("Location: http://tp-quizz.test/index.php?log-in");
 
