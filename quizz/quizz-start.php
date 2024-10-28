@@ -28,7 +28,7 @@ if (!empty($_SESSION["userName"])) {
 
     $sqlRequest = $db->prepare("SELECT * FROM user WHERE name = :name");
     $sqlRequest->execute(["name" => $_SESSION["userName"]]);
-    $user = $sqlRequest->fetch();  
+    $user = $sqlRequest->fetch();
 
 ?>
 
@@ -43,8 +43,8 @@ if (!empty($_SESSION["userName"])) {
     </div>
 
     <div class=" flex flex-row items-center pr-10 text-2xl space-x-10">
-        
-        <button id="btnUsers">Users</button>
+
+        <a href="http://tp-quizz.test/quizz/user-list.php"> <button>Users</button> </a>
 
         <a href="http://tp-quizz.test/authentification/log-in.php"> <button>Log out</button> </a>
 
@@ -53,7 +53,7 @@ if (!empty($_SESSION["userName"])) {
 </header>
 
 <div id="body" class="grow">
-     
+
     <div class="items-center flex flex-col justify-center h-full space-y-20">
 
     <h1 class=" text-5xl">Start new quizz ?</h1>
@@ -62,13 +62,11 @@ if (!empty($_SESSION["userName"])) {
 
     </div>
 
-
-    <script src="quizz.js"></script>
-
 </div>
 
 </body>
-<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="quizz.js"></script>
 </html>
 
 <?php
