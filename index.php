@@ -13,18 +13,13 @@
 
 <?php
 
-if (!empty($_SESSION) && $_SESSION["connect"] == true) {
-        if (isset($_GET["sign-in"])) {
-            echo "<p>The user was created</p>";
-        }
-        if (isset($_GET["log-in"])) {
-            echo "<p>The user exist</p>";
-        }
+if (empty($_SESSION["userName"])) {
+    header("Location: http://tp-quizz.test/authentification/sign-in.php");
+} else {
+    header("Location: http://tp-quizz.test/quizz/quizz-start.php");
 }
 
 ?>
-    
-<a href="http://tp-quizz.test/authentification/sign-in.php">Sign-in</a>
 
 </body>
 </html>
