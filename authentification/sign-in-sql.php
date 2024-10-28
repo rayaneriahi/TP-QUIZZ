@@ -10,13 +10,13 @@ if (!empty($_POST)) {
         die;
     }
 
-    $userRequest = $db->prepare("SELECT * FROM users WHERE name = :name");
+    $userRequest = $db->prepare("SELECT * FROM user WHERE name = :name");
     $userRequest->execute(["name" => $_POST["userName"]]);
     $user = $userRequest->fetch();
 
     if(empty($user)) {
         
-        $userRequest = $db->prepare("INSERT INTO users (name, max_score) VALUES (:name, :max_score)");
+        $userRequest = $db->prepare("INSERT INTO user (name, max_score) VALUES (:name, :max_score)");
         $userRequest->execute([
             "name"=> $_POST["userName"],
             "max_score"=> 0,

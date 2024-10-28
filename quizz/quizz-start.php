@@ -26,7 +26,7 @@ if (!empty($_SESSION["userName"])) {
         die;
     }
 
-    $sqlRequest = $db->prepare("SELECT * FROM users WHERE name = :name");
+    $sqlRequest = $db->prepare("SELECT * FROM user WHERE name = :name");
     $sqlRequest->execute(["name" => $_SESSION["userName"]]);
     $user = $sqlRequest->fetch();  
 

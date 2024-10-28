@@ -8,11 +8,11 @@ try {
     die;
 }
 
-$sqlRequest2 = $db->prepare("SELECT id FROM questions ORDER BY id DESC LIMIT 1");
+$sqlRequest2 = $db->prepare("SELECT id FROM question ORDER BY id DESC LIMIT 1");
 $sqlRequest2->execute();
 $id = $sqlRequest2->fetch();
 
-$sqlRequest1 = $db->prepare("SELECT * FROM `questions` WHERE id = :number");
+$sqlRequest1 = $db->prepare("SELECT * FROM `question` WHERE id = :number");
 $sqlRequest1->execute(["number" => $rand = rand(1, $id["id"])]);
 $question = $sqlRequest1->fetch();
 
@@ -20,7 +20,7 @@ $sqlRequest3 = $db->prepare("SELECT * FROM answer WHERE question_id = :question_
 $sqlRequest3->execute(["question_id" => $question["id"]]);
 $answers = $sqlRequest3->fetchAll();
 
-$sqlRequest3 = $db->prepare("SELECT * FROM users WHERE name = :name");
+$sqlRequest3 = $db->prepare("SELECT * FROM user WHERE name = :name");
 $sqlRequest3->execute(["name" => $_SESSION["userName"]]);
 $user = $sqlRequest3->fetch();
 
