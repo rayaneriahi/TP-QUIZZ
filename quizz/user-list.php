@@ -16,7 +16,11 @@ session_start();
 
     $sqlRequest = $db->prepare("SELECT * FROM user WHERE name = :name");
     $sqlRequest->execute(["name" => $_SESSION["userName"]]);
-    $user = $sqlRequest->fetch();  
+    $user = $sqlRequest->fetch();
+
+    $sqlRequest2 = $db->prepare("SELECT name, max_score FROM user ORDER BY max_score DESC");
+    $sqlRequest2->execute();
+    $users = $sqlRequest2->fetchAll();
 
 ?>
 
@@ -31,7 +35,7 @@ session_start();
     </div>
 
     <div class=" flex flex-row items-center pr-10 text-2xl space-x-10">
-        
+
         <button id="btnQuizz">Quizz</button>
 
         <a href="http://tp-quizz.test/authentification/log-in.php"> <button>Log out</button> </a>
