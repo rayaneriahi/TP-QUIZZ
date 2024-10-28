@@ -10,7 +10,7 @@ if (!empty($_POST)) {
         die;
     }
 
-    $userRequest = $db->prepare("SELECT * FROM users WHERE name = :name");
+    $userRequest = $db->prepare("SELECT * FROM user WHERE name = :name");
     $userRequest->execute(["name" => $_POST["userName"]]);
     $user = $userRequest->fetch();
 

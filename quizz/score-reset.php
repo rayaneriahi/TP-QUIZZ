@@ -8,7 +8,7 @@ try {
     die;
 }
 
-$userRequest = $db->prepare("UPDATE users SET current_score = :current_score WHERE name = :name");
+$userRequest = $db->prepare("UPDATE user SET current_score = :current_score WHERE name = :name");
 $userRequest->execute([
     "current_score"=> 0,
     "name"=> $_SESSION["userName"],

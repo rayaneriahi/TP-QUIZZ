@@ -8,7 +8,7 @@
         die;
     }
 
-    $sqlRequest2 = $db->prepare("SELECT * FROM users WHERE name = :name");
+    $sqlRequest2 = $db->prepare("SELECT * FROM user WHERE name = :name");
     $sqlRequest2->execute([
         "name" => $_SESSION["userName"],
     ]);
