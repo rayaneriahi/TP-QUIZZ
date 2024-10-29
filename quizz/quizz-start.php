@@ -14,9 +14,9 @@ if (!empty($_SESSION["userName"])) {
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Quizz</title>
 </head>
-<body class="h-screen flex flex-col">
+<body class="h-screen flex flex-col bg-red-300">
 
-<img src="../images/paysage.jpg" class=" absolute h-full w-full z-0">
+<!-- <img src="../images/paysage.jpg" class=" absolute h-full w-full z-0"> -->
 
 <header class=" flex flex-row justify-between py-3 z-10 pt-10">
 
@@ -52,7 +52,9 @@ if (!empty($_SESSION["userName"])) {
 
 </header>
 
+<div id="body">
 
+    <div>
 
         <h1 class=" text-5xl font-semibold text-blue-800">Start new quizz ?</h1>
 
