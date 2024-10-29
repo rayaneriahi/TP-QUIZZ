@@ -24,7 +24,7 @@ function startInterval(timer) {
         } else {
             let numberTimer = number - i;
             const timer = document.querySelector("#timer")
-            timer.innerHTML = "(" + numberTimer + ") s";
+            timer.innerHTML = numberTimer + " sec";
         }
         i++;
     }, 1000);

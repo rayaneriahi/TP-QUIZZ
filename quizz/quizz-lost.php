@@ -18,17 +18,14 @@
 
 ?>
 
-<div class=" flex flex-col space-y-28">
+<div class="items-center flex flex-col justify-center h-1/2 w-5/12 space-y-20 rounded-2xl bg-white">
 
-<p class="text-xl flex flex-row-reverse pr-10 pt-5"><?php echo "Score (" . $user["current_score"] . ")" ?></p>
+    <div class="flex flex-col items-center justify-center space-y-20">
 
+        <h1 class="text-5xl font-semibold text-blue-800">You lost ...</h1>
 
-<div class="flex flex-col items-center justify-center space-y-20">
+        <button class="text-3xl px-10 border-spacing-12 border-4 border-gray-400 rounded-2xl font-semibold shadow-xl py-1 h-16 w-60 hover:text-blue-800 hover:border-blue-800" id="btnRestart">Restart</button>
 
-    <h1 class="text-5xl">You lost ...</h1>
-
-    <button class=" text-2xl px-10 border border-black rounded-xl shadow-xl py-1" id="btnRestart">Restart</button>
-
-</div>
+    </div>
 
 </div>
