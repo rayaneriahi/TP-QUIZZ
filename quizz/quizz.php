@@ -24,49 +24,17 @@ $sqlRequest3 = $db->prepare("SELECT * FROM user WHERE name = :name");
 $sqlRequest3->execute(["name" => $_SESSION["userName"]]);
 $user = $sqlRequest3->fetch();
 
+echo json_encode([
+    "questionTheme" => $question["theme"],
+    "question" => $question["text"],
+    "currentScore" => $user["current_score"],
+    "question1IsCorrect" => $answers[0]["is_correct"],
+    "question2IsCorrect" => $answers[1]["is_correct"],
+    "question3IsCorrect" => $answers[2]["is_correct"],
+    "question1"=> $answers[0]["text"],
+    "question2"=> $answers[1]["text"],
+    "question3"=> $answers[2]["text"],
+])
+
+
 ?>
-
-<div class="space-y-10 pt-5">
-
-    <div class="px-10 flex flex-row justify-between">
-
-        <p class="text-2xl">Theme : <?php echo $question["theme"];?></p>
-        
-        <div>
-
-        <p id="timer" class="text-xl">(30) s</p>
-        
-        <?php echo "<p id=\"score\" class=\"text-xl\">Score (" . $user["current_score"] . ")</p>" ?>
-
-        </div>
-
-    </div>
-
-    <div class="place-self-center">
-
-            <h1 class="text-3xl"><?php echo $question["text"];?></h1>
-            
-    </div>
-
-
-    <div class="place-self-center space-y-5">
-
-    <p class="text-2xl"><?php echo "(1) " . $answers[0]["text"];?></p>
-
-    <p class="text-2xl"><?php echo "(2) " . $answers[1]["text"];?></p>
-
-    <p class="text-2xl"><?php echo "(3) " . $answers[2]["text"];?></p>
-
-    </div>
-
-    <div class="place-self-center space-x-4">
-
-        <button class="btnsAnswer text-xl border border-black px-2 rounded-lg size-10" id="<?php echo $answers[0]["is_correct"];?>">1</button>
-
-        <button class="btnsAnswer text-xl border border-black px-2 rounded-lg size-10" id="<?php echo $answers[1]["is_correct"];?>">2</button>
-
-        <button class="btnsAnswer text-xl border border-black px-2 rounded-lg size-10" id="<?php echo $answers[2]["is_correct"];?>">3</button>
-
-    </div>
-
-</div>

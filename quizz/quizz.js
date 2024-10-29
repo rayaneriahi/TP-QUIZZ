@@ -5,12 +5,12 @@ const btnUsers = document.querySelector("#btnUsers")
 let intervalId
 
 btnStart.addEventListener("click", () => {
-    bodyQuizz(body)
+    bodyQuizz()
 })
 
-// btnUsers.addEventListener("click", () => {
-//     fetchUsers()
-// })
+btnUsers.addEventListener("click", () => {
+    fetchUsers()
+})
 
 //démarrer le timer
 function startInterval(timer) {
@@ -24,7 +24,7 @@ function startInterval(timer) {
         } else {
             let numberTimer = number - i;
             const timer = document.querySelector("#timer")
-            timer.innerHTML = "(" + numberTimer + ") s";
+            timer.innerHTML = numberTimer + " sec";
         }
         i++;
     }, 1000);
@@ -120,7 +120,7 @@ const ctx = document.getElementById('myChart');
 async function bodyLost(body) {
     const response = await fetch("http://tp-quizz.test/quizz/quizz-lost.php")
     const data = await response.json()
-    console.log(data);
+    console.log(data)
     body.innerHTML = `<div class=" flex flex-col space-y-28">
 
     <p class="text-xl flex flex-row-reverse pr-10 pt-5"><?php echo "Score (${data.currenst_score})" ?></p>
@@ -156,9 +156,40 @@ async function bodyLost(body) {
 //Afficher la page Quizz
 async function bodyQuizz() {
     const response = await fetch("http://tp-quizz.test/quizz/quizz.php")
-    const text = await response.text()
+    const data = await response.json()
     const body = document.querySelector("#body")
-    body.innerHTML = text
+    body.innerHTML = `<div class="space-y-10 pt-10 bg-white w-10/12 rounded-2xl">
+
+    <div class="flex flex-row w-full">
+
+        <p class="text-3xl font-semibold w-1/3 pl-10">Theme : ${data.questionTheme}</p>
+        
+        <p id="timer" class="text-3xl font-semibold w-1/3 text-center">30 sec</p>
+
+
+    </div>
+
+    <div class="place-self-center">
+
+            <h1 class="text-4xl font-semibold text-blue-800">${data.question}</h1>
+            
+    </div>
+
+    <div class="place-self-center flex flex-col w-full space-y-6">
+
+        <button class="btnsAnswer font-semibold text-3xl border-4 border-slate-400 px-2 mx-20 rounded-2xl py-1 place-items-start pl-5 hover:border-blue-800 hover:text-blue-800" id="${data.question1IsCorrect}"> <p class="text-2xl">${data.question1}</p></button>
+
+        <button class="btnsAnswer font-semibold text-3xl border-4 border-slate-400 px-2 mx-20 rounded-2xl py-1 place-items-start pl-5 hover:border-blue-800 hover:text-blue-800" id="${data.question2IsCorrect}"> <p class="text-2xl">${data.question2}</button>
+
+        <button class="btnsAnswer font-semibold text-3xl border-4 border-slate-400 px-2 mx-20 rounded-2xl py-1 place-items-start pl-5 hover:border-blue-800 hover:text-blue-800" id="${data.question3IsCorrect}"> <p class="text-2xl">${data.question3}</button>
+
+    </div>
+
+    <p id="score" class="place-self-center pb-10 text-3xl font-semibold">${data.currentScore}</p>
+
+</div>`
+
+
 
     const timer = document.querySelector("#timer");
     startInterval(timer)
