@@ -109,14 +109,12 @@ const ctx = document.getElementById('myChart');
       }]
     },
     options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
+      responsive: true,
+      maintainAspectRatio: false,
+      },
+  })
 }
+
 
 //Afficher la page Lost
 async function bodyLost(body) {

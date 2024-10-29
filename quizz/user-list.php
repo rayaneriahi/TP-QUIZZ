@@ -82,16 +82,13 @@ session_start();
       }]
     },
     options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
+      responsive: true,
+      maintainAspectRatio: false,
+      },
+  })
 </script>
 
 </body>
-<script src="script.js"></script>
+<script src="quizz.js"></script>
 </html>
 
