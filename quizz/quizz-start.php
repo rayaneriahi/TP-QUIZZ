@@ -14,9 +14,9 @@ if (!empty($_SESSION["userName"])) {
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Quizz</title>
 </head>
-<body class="h-screen flex flex-col">
+<body class="h-screen flex flex-col bg-red-300">
 
-<img src="../images/paysage.jpg" class=" absolute h-full w-full z-0">
+<!-- <img src="../images/paysage.jpg" class=" absolute h-full w-full z-0"> -->
 
 <header class=" flex flex-row justify-between py-3 z-10 pt-10">
 
@@ -30,7 +30,7 @@ if (!empty($_SESSION["userName"])) {
 
     $sqlRequest = $db->prepare("SELECT * FROM user WHERE name = :name");
     $sqlRequest->execute(["name" => $_SESSION["userName"]]);
-    $user = $sqlRequest->fetch();  
+    $user = $sqlRequest->fetch();
 
 ?>
 
@@ -44,9 +44,7 @@ if (!empty($_SESSION["userName"])) {
 ?>
     </div>
 
-    <div class=" flex flex-row text-white font-semibold items-center pr-10 text-3xl space-x-10">
-        
-        <button id="btnUsers" class=" hover:text-gray-400">Users</button>
+        <a href="http://tp-quizz.test/quizz/user-list.php"><button>Users</button></a>
 
         <a href="http://tp-quizz.test/authentification/log-in.php"> <button class="hover:text-gray-400">Log out</button> </a>
 
@@ -54,9 +52,9 @@ if (!empty($_SESSION["userName"])) {
 
 </header>
 
-<div id="body" class="grow z-10 items-center flex flex-col justify-center ">
-     
-    <div class="items-center flex flex-col justify-center h-1/2 w-5/12 space-y-20 rounded-2xl bg-white">
+<div id="body">
+
+    <div>
 
         <h1 class=" text-5xl font-semibold text-blue-800">Start new quizz ?</h1>
 
@@ -64,13 +62,11 @@ if (!empty($_SESSION["userName"])) {
 
     </div>
 
-
-    <script src="quizz.js"></script>
-
 </div>
 
 </body>
-<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="quizz.js"></script>
 </html>
 
 <?php
