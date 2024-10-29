@@ -14,6 +14,7 @@
     ]);
     $user = $sqlRequest2->fetch();
 
+
     // Sélcetionner les question répondues par l'utilisateur, et le thème associé aà chaque question
     $sqlRequest3 = $db->prepare("SELECT uq.is_correct, q.theme from user_question uq LEFT JOIN question q ON uq.question_id = q.id WHERE user_id = :user_id");
     $sqlRequest3->execute([
@@ -27,5 +28,6 @@
         "answers" => $answers,
         "current_score" => $user["current_score"]
     ]);
+
 
 ?>

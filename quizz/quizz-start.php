@@ -14,9 +14,11 @@ if (!empty($_SESSION["userName"])) {
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Quizz</title>
 </head>
-<body class=" bg-orange-200 h-screen flex flex-col">
+<body class="h-screen flex flex-col">
 
-<header class=" flex flex-row justify-between border-b-4 border-orange-300 py-3">
+<img src="../images/paysage.jpg" class=" absolute h-full w-full z-0">
+
+<header class=" flex flex-row justify-between py-3 z-10 pt-10">
 
 <?php
 
@@ -32,33 +34,29 @@ if (!empty($_SESSION["userName"])) {
 
 ?>
 
-    <div class=" flex flex-col pl-10 text-2xl space-y-2">
+    <div class=" pl-10 text-3xl font-semibold text-white space-x-10">
 <?php
 
     echo "<span>".$user["name"]."</span>";
 
-    echo "<span>Best score (".$user["max_score"].")</span>";
+    echo "<span>Best score : ".$user["max_score"]."</span>";
 
 ?>
     </div>
 
-    <div class=" flex flex-row items-center pr-10 text-2xl space-x-10">
 
-        <a href="http://tp-quizz.test/quizz/user-list.php"> <button>Users</button> </a>
 
-        <a href="http://tp-quizz.test/authentification/log-in.php"> <button>Log out</button> </a>
+        <a href="http://tp-quizz.test/authentification/log-in.php"> <button class="hover:text-gray-400">Log out</button> </a>
 
     </div>
 
 </header>
 
-<div id="body" class="grow">
 
-    <div class="items-center flex flex-col justify-center h-full space-y-20">
 
-    <h1 class=" text-5xl">Start new quizz ?</h1>
+        <h1 class=" text-5xl font-semibold text-blue-800">Start new quizz ?</h1>
 
-    <button id="btnStart" class=" text-2xl px-10 border border-black rounded-xl shadow-xl py-1">Start</button>
+        <button id="btnStart" class=" text-3xl px-10 border-spacing-12 border-4 border-gray-400 rounded-2xl font-semibold shadow-xl py-1 h-16 w-60 hover:text-blue-800 hover:border-blue-800">Start</button>
 
     </div>
 

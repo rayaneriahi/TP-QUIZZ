@@ -14,20 +14,20 @@ session_start();
 
 ?>
 
-    <div class=" flex flex-col pl-10 text-2xl space-y-2">
+    <div class=" pl-10 text-3xl font-semibold text-white space-x-10">
 <?php
 
     echo "<span>".$user["name"]."</span>";
 
-    echo "<span>Best score (".$user["max_score"].")</span>";
+    echo "<span>Best score : ".$user["max_score"]."</span>";
 
 ?>
     </div>
 
-    <div class=" flex flex-row items-center pr-10 text-2xl space-x-10">
+    <div class=" flex flex-row text-white font-semibold items-center pr-10 text-3xl space-x-10">
         
-        <button id="btnUsers">Users</button>
+        <button id="btnUsers" class=" hover:text-gray-400">Users</button>
 
-        <a href="http://tp-quizz.test/authentification/log-in.php"> <button>Log out</button> </a>
+        <a href="http://tp-quizz.test/authentification/log-in.php"> <button class="hover:text-gray-400">Log out</button> </a>
 
     </div>
