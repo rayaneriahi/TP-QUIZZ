@@ -8,9 +8,9 @@ btnStart.addEventListener("click", () => {
     bodyQuizz(body)
 })
 
-btnUsers.addEventListener("click", () => {
-    fetchUsers()
-})
+// btnUsers.addEventListener("click", () => {
+//     fetchUsers()
+// })
 
 //démarrer le timer
 function startInterval(timer) {
@@ -30,11 +30,117 @@ function startInterval(timer) {
     }, 1000);
 }
 
+function showScoreChart(answers) {
+const ctx = document.getElementById('myChart');
+
+/*
+    ANSWERS EXAMPLE
+    [
+        {
+            "is_correct": "0",
+            "theme": "Géographie",
+        },
+        {
+            "is_correct": "1",
+            "theme": "Histoire",
+        },
+        {
+            "is_correct": "0",
+            "theme": "Géographie",
+        },
+        {
+            "is_correct": "1",
+            "theme": "Histoire",
+        },
+        {
+            "is_correct": "0",
+            "theme": "Géographie",
+        },
+    ]
+*/
+
+/*
+    STATS EXAMPLE
+    {
+        "Histoire": {
+            "total": 5,
+            "correct": 3,
+        },
+        "Géographie": {
+            "total": 5,
+            "correct": 2,
+        }
+*/
+
+  let stats = {};
+
+  // Pour chaque answer
+  for (const answer of answers) {
+    // Si le thème n'existe pas dans stats, on le crée
+    if (stats[answer.theme] === undefined) {
+        stats[answer.theme] = {
+            total: 0,
+            correct: 0,
+        };
+    }
+
+    // On incrémente le "total" du thème dans stats
+    stats[answer.theme].total++;
+
+    // SI la réponse est correcte, on incrémente le "correct" du thème dans stats
+    if (answer.is_correct == 1) {
+        stats[answer.theme].correct++;
+    }
+  }
+
+  let themes = Object.keys(stats);
+  let results = Object.values(stats).map((stat) => {
+    return stat.correct == 0 ? 0 : stat.total / stat.correct * 100;
+  })
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: themes,
+      datasets: [{
+        label: '# of users',
+        data: results,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
 //Afficher la page Lost
 async function bodyLost(body) {
     const response = await fetch("http://tp-quizz.test/quizz/quizz-lost.php")
-    const text = await response.text()
-    body.innerHTML = text
+    const data = await response.json()
+    console.log(data);
+    body.innerHTML = `<div class=" flex flex-col space-y-28">
+
+    <p class="text-xl flex flex-row-reverse pr-10 pt-5"><?php echo "Score (${data.currenst_score})" ?></p>
+
+
+    <div class="flex flex-col items-center justify-center space-y-20">
+
+        <h1 class="text-5xl">You lost ...</h1>
+
+        <button class=" text-2xl px-10 border border-black rounded-xl shadow-xl py-1" id="btnRestart">Restart</button>
+
+    </div>
+
+</div>
+
+<div>
+  <canvas id="myChart"></canvas>
+</div>`;
 
     const header = document.querySelector("header")
     fetchHeader(header)
@@ -45,6 +151,7 @@ async function bodyLost(body) {
         bodyQuizz(body)
     })
     fetch("http://tp-quizz.test/quizz/score-reset.php")
+    showScoreChart(data.answers);
 
 }
 
@@ -124,11 +231,11 @@ async function fetchQuizz() {
     const btnUsers = document.querySelector("#btnUsers")
     btnUsers.addEventListener("click", () => {
         const body = document.querySelector("#body")
-        fetchUsers(body) 
+        fetchUsers(body)
     })
 
     const btnStart = document.querySelector("#btnStart")
     btnStart.addEventListener("click", () => {
-        bodyQuizz() 
+        bodyQuizz()
     })
 }
