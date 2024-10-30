@@ -4,7 +4,9 @@ session_start();
 
 ?>
 
-<header class=" flex flex-row justify-between border-b-4 border-orange-300 py-3">
+<img src="../images/paysage.jpg" class=" absolute h-full w-full z-0">
+
+<header class=" flex flex-row justify-between py-3 z-10 pt-10">
 
 <?php
 
@@ -20,7 +22,7 @@ session_start();
 
 ?>
 
-    <div class=" flex flex-col pl-10 text-2xl space-y-2">
+    <div class=" pl-10 text-3xl font-semibold text-white space-x-10">
 <?php
 
     echo "<span>".$user["name"]."</span>";
@@ -30,23 +32,23 @@ session_start();
 ?>
     </div>
 
-    <div class=" flex flex-row items-center pr-10 text-2xl space-x-10">
+    <div class=" flex flex-row text-white font-semibold items-center pr-10 text-3xl space-x-10">
         
-        <button id="btnUsers">Users</button>
+        <button id="btnUsers" class=" hover:text-gray-400">Users</button>
 
-        <a href="http://tp-quizz.test/authentification/log-in.php"> <button>Log out</button> </a>
+        <a href="http://tp-quizz.test/authentification/log-in.php"> <button class=" hover:text-gray-400">Log out</button> </a>
 
     </div>
 
 </header>
 
-<div id="body" class="grow">
+<div id="body" class="grow z-10 items-center flex flex-col justify-center">
      
-    <div class="items-center flex flex-col justify-center h-full space-y-20">
+    <div class="items-center flex flex-col justify-center h-1/2 w-5/12 space-y-20 rounded-2xl bg-white">
 
-    <h1 class=" text-5xl">Start new quizz ?</h1>
+    <h1 class=" text-5xl font-semibold text-blue-800">Start new quizz ?</h1>
 
-    <button id="btnStart" class=" text-2xl px-10 border border-black rounded-xl shadow-xl py-1">Start</button>
+    <button id="btnStart" class=" text-3xl px-10 border-spacing-12 border-4 border-gray-400 rounded-2xl font-semibold shadow-xl py-1 h-16 w-60 hover:text-blue-800 hover:border-blue-800">Start</button>
 
     </div>
 

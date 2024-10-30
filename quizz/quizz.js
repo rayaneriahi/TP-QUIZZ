@@ -8,9 +8,9 @@ btnStart.addEventListener("click", () => {
     bodyQuizz()
 })
 
-// btnUsers.addEventListener("click", () => {
-//     fetchUsers()
-// })
+btnUsers.addEventListener("click", () => {
+    fetchUsers()
+})
 
 //démarrer le timer
 function startInterval(timer) {
@@ -123,24 +123,19 @@ async function bodyLost(body) {
     const response = await fetch("http://tp-quizz.test/quizz/quizz-lost.php")
     const data = await response.json()
     console.log(data)
-    body.innerHTML = `<div class=" flex flex-col space-y-28">
+    body.innerHTML = `<div class=" flex flex-col bg-white p-16 rounded-2xl place-items-center w-max">
 
-    <p class="text-xl flex flex-row-reverse pr-10 pt-5"><?php echo "Score (${data.currenst_score})" ?></p>
+    <div class="flex flex-col items-center justify-center space-y-10">
 
+        <h1 class="text-5xl font-semibold text-blue-800">You lost ...</h1>
 
-    <div class="flex flex-col items-center justify-center space-y-20">
+        <canvas id="myChart"></canvas>
 
-        <h1 class="text-5xl">You lost ...</h1>
-
-        <button class=" text-2xl px-10 border border-black rounded-xl shadow-xl py-1" id="btnRestart">Restart</button>
+        <button class=" text-3xl border-spacing-12 border-4 border-gray-400 rounded-2xl font-semibold shadow-xl py-1 h-16 w-60 hover:text-blue-800 hover:border-blue-800" id="btnRestart">Restart</button>
 
     </div>
 
-</div>
-
-<div>
-  <canvas id="myChart"></canvas>
-</div>`;
+</div>`
 
     const header = document.querySelector("header")
     fetchHeader(header)
@@ -230,8 +225,22 @@ async function answerTrue() {
 //Afficher le header
 async function fetchHeader(header) {
     const response = await fetch("http://tp-quizz.test/quizz/score-max.php")
-    const text = await response.text()
-    header.innerHTML = text
+    const data = await response.json()
+    header.innerHTML =    `<div class=" pl-10 text-3xl font-semibold text-white space-x-10">
+
+    <span>${data.userName}</span>
+
+    <span>Best score : ${data.bestScore}</span>
+
+</div>
+
+<div class=" flex flex-row text-white font-semibold items-center pr-10 text-3xl space-x-10">
+    
+    <a href="http://tp-quizz.test/quizz/user-list.php"><button class=" hover:text-gray-400">Users</button></a>
+
+    <a href="http://tp-quizz.test/authentification/log-in.php"> <button class="hover:text-gray-400">Log out</button> </a>
+
+</div>`
 
     const btnUsers = document.querySelector("#btnUsers")
     btnUsers.addEventListener("click", () => {
@@ -241,32 +250,32 @@ async function fetchHeader(header) {
 }
 
 //Afficher users
-async function fetchUsers() {
-    const response = await fetch("http://tp-quizz.test/quizz/user-list.php")
-    const text = await response.text()
-    realBody.innerHTML = text
-    console.log("body")
+// async function fetchUsers() {
+//     const response = await fetch("http://tp-quizz.test/quizz/user-list.php")
+//     const text = await response.text()
+//     realBody.innerHTML = text
+//     console.log("body")
 
-    const btnQuizz = document.querySelector("#btnQuizz")
-    btnQuizz.addEventListener("click", () => {
-        fetchQuizz()
-    })
-}
+//     const btnQuizz = document.querySelector("#btnQuizz")
+//     btnQuizz.addEventListener("click", () => {
+//         fetchQuizz()
+//     })
+// }
 
 //Afficher le quizz start
-async function fetchQuizz() {
-    const response = await fetch("http://tp-quizz.test/quizz/fetch-quizz-start.php")
-    const text = await response.text()
-    realBody.innerHTML = text
+// async function fetchQuizz() {
+//     const response = await fetch("http://tp-quizz.test/quizz/fetch-quizz-start.php")
+//     const text = await response.text()
+//     realBody.innerHTML = text
 
-    const btnUsers = document.querySelector("#btnUsers")
-    btnUsers.addEventListener("click", () => {
-        const body = document.querySelector("#body")
-        fetchUsers(body)
-    })
+//     const btnUsers = document.querySelector("#btnUsers")
+//     btnUsers.addEventListener("click", () => {
+//         const body = document.querySelector("#body")
+//         fetchUsers(body)
+//     })
 
-    const btnStart = document.querySelector("#btnStart")
-    btnStart.addEventListener("click", () => {
-        bodyQuizz()
-    })
-}
+//     const btnStart = document.querySelector("#btnStart")
+//     btnStart.addEventListener("click", () => {
+//         bodyQuizz()
+//     })
+// }

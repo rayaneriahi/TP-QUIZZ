@@ -10,7 +10,7 @@
 
 <img src="../images/paysage.jpg" class=" absolute h-full w-full z-0">
 
-<div class=" flex flex-col p-5 space-y-5 z-10 bg-white pt-10 pb-10 rounded-2xl">
+<div class=" flex flex-col p-5 space-y-5 z-10 bg-white pt-10 pb-10 rounded-2xl px-10">
 
     <h1 class=" place-self-center text-4xl font-semibold text-blue-800">Sign in</h1>
 
