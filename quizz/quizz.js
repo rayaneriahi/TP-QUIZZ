@@ -5,25 +5,30 @@ const btnUsers = document.querySelector("#btnUsers")
 let intervalId
 
 btnStart.addEventListener("click", () => {
-    bodyQuizz()
+    let questionNumber = 0
+    fetch("http://tp-quizz.test/quizz/quizz-number.php")
+    bodyQuizz(questionNumber)
 })
 
-btnUsers.addEventListener("click", () => {
-    fetchUsers()
-})
+// btnUsers.addEventListener("click", () => {
+//     fetchUsers()
+// })
 
 //démarrer le timer
-function startInterval(timer) {
+function startInterval(timer, data, questionNumber) {
     let i = 0;
-    let number = 29;
+    let number = 14;
     intervalId = setInterval(() => {
-        if (number - i === 0) {
+        if (number - i === 110) {
             clearInterval(intervalId);
-            const body = document.querySelector("#body")
-            bodyLost(body)
+
+            fetch(`http://tp-quizz.test/quizz/answer.php?answer=false&question-id=${data}`)
+
+            questionNumber = questionNumber + 1
+
+            bodyQuizz(questionNumber)
         } else {
             let numberTimer = number - i;
-            const timer = document.querySelector("#timer")
             timer.innerHTML = numberTimer + " sec";
         }
         i++;
@@ -32,45 +37,6 @@ function startInterval(timer) {
 
 function showScoreChart(answers) {
 const ctx = document.getElementById('myChart');
-
-/*
-    ANSWERS EXAMPLE
-    [
-        {
-            "is_correct": "0",
-            "theme": "Géographie",
-        },
-        {
-            "is_correct": "1",
-            "theme": "Histoire",
-        },
-        {
-            "is_correct": "0",
-            "theme": "Géographie",
-        },
-        {
-            "is_correct": "1",
-            "theme": "Histoire",
-        },
-        {
-            "is_correct": "0",
-            "theme": "Géographie",
-        },
-    ]
-*/
-
-/*
-    STATS EXAMPLE
-    {
-        "Histoire": {
-            "total": 5,
-            "correct": 3,
-        },
-        "Géographie": {
-            "total": 5,
-            "correct": 2,
-        }
-*/
 
   let stats = {};
 
@@ -95,8 +61,11 @@ const ctx = document.getElementById('myChart');
 
   let themes = Object.keys(stats);
   let results = Object.values(stats).map((stat) => {
-    return stat.correct == 0 ? 0 : stat.total / stat.correct * 100;
+    return stat.correct == 0 ? 0 : 100 / stat.total * stat.correct;
   })
+
+console.log(results)
+
 
   new Chart(ctx, {
     type: 'bar',
@@ -111,7 +80,15 @@ const ctx = document.getElementById('myChart');
     options: {
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) {
+              return value + '%';
+            },
+            format: {
+                style: 'percent'
+            }
+          }
         }
       }
     }
@@ -122,7 +99,6 @@ const ctx = document.getElementById('myChart');
 async function bodyLost(body) {
     const response = await fetch("http://tp-quizz.test/quizz/quizz-lost.php")
     const data = await response.json()
-    console.log(data)
     body.innerHTML = `<div class=" flex flex-col bg-white p-16 rounded-2xl place-items-center w-max">
 
     <div class="flex flex-col items-center justify-center space-y-10">
@@ -142,84 +118,97 @@ async function bodyLost(body) {
 
     const btnRestart = document.querySelector("#btnRestart")
     btnRestart.addEventListener("click", () => {
-        const body = document.querySelector("#body")
-        bodyQuizz(body)
+        fetch("http://tp-quizz.test/quizz/quizz-number.php")
+        let questionNumber = 0
+        bodyQuizz(questionNumber)
     })
+
     fetch("http://tp-quizz.test/quizz/score-reset.php")
+
     showScoreChart(data.answers);
 
 }
 
 //Afficher la page Quizz
-async function bodyQuizz() {
+async function bodyQuizz(questionNumber) {
     const response = await fetch("http://tp-quizz.test/quizz/quizz.php")
     const data = await response.json()
-    const body = document.querySelector("#body")
-    body.innerHTML = `<div class="space-y-10 pt-10 bg-white w-10/12 rounded-2xl">
+    console.log(data.questionsCount, questionNumber)
+    if (questionNumber !== data.questionsCount) {
+        const body = document.querySelector("#body")
+        body.innerHTML = `<div class="space-y-10 pt-10 bg-white w-10/12 rounded-2xl">
 
-    <div class="flex flex-row w-full">
+        <div class="flex flex-row w-full">
 
-        <p class="text-3xl font-semibold w-1/3 pl-10">Theme : ${data.questionTheme}</p>
-        
-        <p id="timer" class="text-3xl font-semibold w-1/3 text-center">30 sec</p>
-
-
-    </div>
-
-    <div class="place-self-center">
-
-            <h1 class="text-4xl font-semibold text-blue-800">${data.question}</h1>
+            <p class="text-3xl font-semibold w-1/3 pl-10">Theme : ${data.questionTheme}</p>
             
-    </div>
-
-    <div class="place-self-center flex flex-col w-full space-y-6">
-
-        <button class="btnsAnswer font-semibold text-3xl border-4 border-slate-400 px-2 mx-20 rounded-2xl py-1 place-items-start pl-5 hover:border-blue-800 hover:text-blue-800" id="${data.question1IsCorrect}"> <p class="text-2xl">${data.question1}</p></button>
-
-        <button class="btnsAnswer font-semibold text-3xl border-4 border-slate-400 px-2 mx-20 rounded-2xl py-1 place-items-start pl-5 hover:border-blue-800 hover:text-blue-800" id="${data.question2IsCorrect}"> <p class="text-2xl">${data.question2}</button>
-
-        <button class="btnsAnswer font-semibold text-3xl border-4 border-slate-400 px-2 mx-20 rounded-2xl py-1 place-items-start pl-5 hover:border-blue-800 hover:text-blue-800" id="${data.question3IsCorrect}"> <p class="text-2xl">${data.question3}</button>
-
-    </div>
-
-    <p id="score" class="place-self-center pb-10 text-3xl font-semibold">${data.currentScore}</p>
-
-</div>`
+            <p id="timer" class="text-3xl font-semibold w-1/3 text-center">15 sec</p>
 
 
+        </div>
 
-    const timer = document.querySelector("#timer");
-    startInterval(timer)
+        <div class="place-self-center">
 
-    const btnsAnswer = document.querySelectorAll(".btnsAnswer")
-    btnsAnswer.forEach((btn) => {
-        btn.addEventListener("click", () => {
-            answer(btn)
+                <h1 class="text-4xl font-semibold text-blue-800">${data.question}</h1>
+                
+        </div>
+
+        <div class="place-self-center flex flex-col w-full space-y-6">
+
+            <button class="btnsAnswer font-semibold text-3xl border-4 border-slate-400 px-2 mx-20 rounded-2xl py-1 place-items-start pl-5 hover:border-blue-800 hover:text-blue-800" id="${data.question1IsCorrect}"> <p class="text-2xl">${data.question1}</p></button>
+
+            <button class="btnsAnswer font-semibold text-3xl border-4 border-slate-400 px-2 mx-20 rounded-2xl py-1 place-items-start pl-5 hover:border-blue-800 hover:text-blue-800" id="${data.question2IsCorrect}"> <p class="text-2xl">${data.question2}</button>
+
+            <button class="btnsAnswer font-semibold text-3xl border-4 border-slate-400 px-2 mx-20 rounded-2xl py-1 place-items-start pl-5 hover:border-blue-800 hover:text-blue-800" id="${data.question3IsCorrect}"> <p class="text-2xl">${data.question3}</button>
+
+        </div>
+
+        <p id="score" class="place-self-center pb-10 text-3xl font-semibold">Score : ${data.currentScore}</p>
+
+    </div>`
+
+        const timer = document.querySelector("#timer");
+        startInterval(timer, data.questionId, questionNumber)
+
+        const btnsAnswer = document.querySelectorAll(".btnsAnswer")
+        btnsAnswer.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                answer(btn, data, questionNumber)
+            })
         })
-    })
-}
-
-//Vérifier les réponse
-function answer(btn) {
-    if (btn.id == 1) {
-        answerTrue()
     } else {
-        answerFalse()
+        const body = document.querySelector("#body")
+        bodyLost(body)
     }
 }
 
-function answerFalse() {
-        clearInterval(intervalId);
-        const body = document.querySelector("#body")
-        bodyLost(body)
-        console.log("no")
+//Vérifier les réponse
+function answer(btn, data, questionNumber) {
+    if (btn.id == 1) {
+        answerTrue(data, questionNumber)
+    } else {
+        answerFalse(data, questionNumber)
+    }
 }
 
-async function answerTrue() {
+function answerFalse(data, questionNumber) {
     clearInterval(intervalId);
-    await fetch("http://tp-quizz.test/quizz/score-plus.php")
-    const body = document.querySelector("#body")
-    bodyQuizz(body)
+    fetch(`http://tp-quizz.test/quizz/answer.php?answer=false&question-id=${data.questionId}`)
+    
+    questionNumber = questionNumber + 1
+
+    bodyQuizz(questionNumber)
+}
+
+async function answerTrue(data, questionNumber) {
+    fetch("http://tp-quizz.test/quizz/score-plus.php")
+
+    clearInterval(intervalId);
+    fetch(`http://tp-quizz.test/quizz/answer.php?answer=true&question-id=${data.questionId}`)
+
+    questionNumber = questionNumber + 1
+
+    bodyQuizz(questionNumber)
 }
 
 //Afficher le header
@@ -242,11 +231,11 @@ async function fetchHeader(header) {
 
 </div>`
 
-    const btnUsers = document.querySelector("#btnUsers")
-    btnUsers.addEventListener("click", () => {
-        fetchUsers()
-        console.log("click")
-    })
+    // const btnUsers = document.querySelector("#btnUsers")
+    // btnUsers.addEventListener("click", () => {
+    //     fetchUsers()
+    //     console.log("click")
+    // })
 }
 
 //Afficher users

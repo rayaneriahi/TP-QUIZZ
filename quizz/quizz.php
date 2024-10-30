@@ -20,9 +20,17 @@ $sqlRequest3 = $db->prepare("SELECT * FROM answer WHERE question_id = :question_
 $sqlRequest3->execute(["question_id" => $question["id"]]);
 $answers = $sqlRequest3->fetchAll();
 
+$sqlRequest3 = $db->prepare("SELECT * FROM question");
+$sqlRequest3->execute();
+$questions = $sqlRequest3->fetchAll();
+
 $sqlRequest3 = $db->prepare("SELECT * FROM user WHERE name = :name");
 $sqlRequest3->execute(["name" => $_SESSION["userName"]]);
 $user = $sqlRequest3->fetch();
+
+if (empty($user["current_score"])) {
+    $user["current_score"] = 0;
+}
 
 echo json_encode([
     "questionTheme" => $question["theme"],
@@ -34,7 +42,8 @@ echo json_encode([
     "question1"=> $answers[0]["text"],
     "question2"=> $answers[1]["text"],
     "question3"=> $answers[2]["text"],
-])
-
+    "questionId" => $question["id"],
+    "questionsCount" => count($questions)
+]);
 
 ?>

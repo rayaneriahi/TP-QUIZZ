@@ -43,4 +43,9 @@ if (is_null($user["current_score"])) {
 
 }
 
+$sqlRequest2 = $db->prepare("SELECT * FROM user WHERE name = :name");
+$sqlRequest2->execute(["name" => $_SESSION["userName"]]);
+$user = $sqlRequest2->fetch();
+
+
 ?>
