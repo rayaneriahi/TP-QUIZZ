@@ -16,9 +16,9 @@ if (!empty($_SESSION["userName"])) {
 </head>
 <body class="h-screen flex flex-col bg-red-300">
 
-<!-- <img src="../images/paysage.jpg" class=" absolute h-full w-full z-0"> -->
+<img src="../images/paysage.jpg" class=" absolute h-full w-full z-0">
 
-<header class=" flex flex-row justify-between py-3 z-10 pt-10">
+<header class=" flex flex-row justify-between py-3 pt-10 z-10">
 
 <?php
 
@@ -44,7 +44,9 @@ if (!empty($_SESSION["userName"])) {
 ?>
     </div>
 
-        <a href="http://tp-quizz.test/quizz/user-list.php"><button>Users</button></a>
+    <div class=" pr-10 text-3xl font-semibold text-white space-x-10">
+
+        <a href="http://tp-quizz.test/quizz/user-list.php"><button class="hover:text-gray-400">Users</button></a>
 
         <a href="http://tp-quizz.test/authentification/log-in.php"> <button class="hover:text-gray-400">Log out</button> </a>
 
@@ -52,9 +54,9 @@ if (!empty($_SESSION["userName"])) {
 
 </header>
 
-<div id="body">
+<div id="body" class="z-10 grow place-items-center content-center">
 
-    <div>
+    <div class="bg-white space-y-14 p-20 rounded-2xl place-items-center w-max">
 
         <h1 class=" text-5xl font-semibold text-blue-800">Start new quizz ?</h1>
 
